@@ -20,8 +20,8 @@ package org.elasticsearch.index.analysis;
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
 import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
+import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
 import org.elasticsearch.analysis.PinyinConfig;
 import org.nlpcn.commons.lang.pinyin.Pinyin;
 
@@ -32,7 +32,6 @@ import java.util.HashSet;
 import java.util.List;
 
 public class PinyinTokenFilter extends TokenFilter {
-
     private final CharTermAttribute termAtt = addAttribute(CharTermAttribute.class);
     private boolean done = true;
     private boolean processedCandidate = false;
@@ -170,7 +169,7 @@ public class PinyinTokenFilter extends TokenFilter {
 
         if (config.keepOriginal && !processedOriginal) {
             processedOriginal = true;
-            addCandidate(new TermItem(source, 0, source.length(), 1));
+            addCandidate(new TermItem(source, 0, source.length(), 1, TermItem.TYPE_CN_WORD));
         }
 
         if (config.keepJoinedFullPinyin && !processedFullPinyinLetter && fullPinyinLetters.length() > 0) {

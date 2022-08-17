@@ -8,15 +8,25 @@ package org.elasticsearch.index.analysis;
  */
 
 public class TermItem implements Comparable<TermItem>{
+    public static final String TYPE_PINYIN = "PINYIN";
+    public static final String TYPE_CN_WORD = "CN_WORD";
     String term;
     int startOffset;
     int endOffset;
     int position;
+    String type;
+
     public TermItem(String term,int startOffset,int endOffset,int position){
         this.term=term;
         this.startOffset=startOffset;
         this.endOffset=endOffset;
         this.position=position;
+        this.type = TYPE_PINYIN;
+    }
+
+    public TermItem(String term,int startOffset,int endOffset,int position, String type){
+        this(term, startOffset, endOffset, position);
+        this.type = type;
     }
 
     @Override

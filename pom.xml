@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.elasticsearch</groupId>
     <artifactId>elasticsearch-analysis-pinyin</artifactId>
-    <version>${elasticsearch.version}</version>
+    <version>7.16.0.3</version>
     <packaging>jar</packaging>
     <description>Pinyin Analysis for Elasticsearch</description>
     <inceptionYear>2012</inceptionYear>
