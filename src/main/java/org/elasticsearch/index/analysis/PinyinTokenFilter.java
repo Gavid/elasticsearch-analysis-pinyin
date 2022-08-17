@@ -33,6 +33,7 @@ import java.util.List;
 
 public class PinyinTokenFilter extends TokenFilter {
     private final CharTermAttribute termAtt = addAttribute(CharTermAttribute.class);
+    private final TypeAttribute typeAtt = addAttribute(TypeAttribute.class);
     private boolean done = true;
     private boolean processedCandidate = false;
     private boolean processedFullPinyinLetter = false;
@@ -203,7 +204,7 @@ public class PinyinTokenFilter extends TokenFilter {
         if (candidateOffset < candidate.size()) {
             TermItem item = candidate.get(candidateOffset);
             candidateOffset++;
-            setTerm(item.term, item.startOffset, item.endOffset, item.position);
+            setTerm(item);
             return true;
         }
 
@@ -245,7 +246,12 @@ public class PinyinTokenFilter extends TokenFilter {
     }
 
 
-    void setTerm(String term, int startOffset, int endOffset, int position) {
+    void setTerm(TermItem termItem) {
+        String term = termItem.term;
+        int startOffset = termItem.startOffset;
+        int endOffset = termItem.endOffset;
+        int position = termItem.position;
+        String type = termItem.type;
         if (config.lowercase) {
             term = term.toLowerCase();
         }
@@ -261,6 +267,7 @@ public class PinyinTokenFilter extends TokenFilter {
 
         termAtt.setEmpty();
         termAtt.append(term);
+        typeAtt.setType(type);
         if (startOffset < 0) {
             startOffset = 0;
         }
